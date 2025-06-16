@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Tree Menu - {% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .main-content {
+            flex: 2; /* Больше места для контента */
+            min-width: 400px;
+            padding: 20px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .menu-sidebar {
+            flex: 1; /* Меньше места для меню */
+            min-width: 280px;
+            padding: 20px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .menu-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu-list ul {
+            padding-left: 20px; /* Отступ для вложенных списков */
+            list-style: none;
+        }
+        .menu-list li {
+            margin-bottom: 5px;
+            position: relative;
+        }
+        .menu-list a {
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #4b5563;
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .menu-list a:hover {
+            background-color: #e0e7ff;
+            color: #3b82f6;
+        }
+        .menu-list .active > a {
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        /* Стили для свернутых элементов */
+        .menu-list .collapsed > ul {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-8">
+        <div class="menu-sidebar">
+            <h2 class="menu-title">Главное меню</h2>
+            {% block main_menu %}{% endblock %}
+        </div>
+        <div class="main-content">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">{% block content_title %}{{ page_name }}{% endblock %}</h1>
+            <p class="text-gray-700 text-lg">Вы находитесь на странице: <code class="bg-gray-200 px-2 py-1 rounded">{{ request.path }}</code></p>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

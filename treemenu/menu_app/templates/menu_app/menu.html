@@ -1,0 +1,28 @@
+{% load menu_tags %}
+{% for item in menu_items %}
+{% with is_active=False is_ancestor_of_active=False is_direct_child_of_active=False %}
+{% if active_item_id == item.id %} {% with is_active=True %}
+{% endwith %}
+{% endif %}
+{% if item.id in active_path_ids and not is_active %}
+{% with is_ancestor_of_active=True %}
+{% endwith %}
+{% endif %}
+{{ item.title }}
+{% if item.children_list %}
+{% if is_ancestor_of_active or is_active %}
+{% if is_active %}
+{% if item.children_list %}
+{% draw_menu_recursive item.children_list active_path_ids active_item_id %}
+{% endif %} {% else %}
+{% draw_menu_recursive item.children_list active_path_ids active_item_id %}
+{% endif %}
+{% else %}
+{% if not active_item_id and item.parent is None %}
+{% draw_menu_recursive item.children_list active_path_ids active_item_id %}
+{% elif item.children_list %}
+...
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
